@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>HeartCare AI - Advanced</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+<div class="card">
+
+    <h1>🫀 Advance CardioPredict AI</h1>
+    <p class="subtitle">Advanced AI Heart Disease Risk Assessment</p>
+
+    <form  action="/predict_advanced" method="POST">
+
+        <div class="grid">
+
+            <!-- Age -->
+            <div class="form-group">
+                <label>Age</label>
+                <input type="number" name="age" required>
+            </div>
+
+            <!-- Gender -->
+            <div class="form-group">
+                <label>Gender</label>
+                <select name="sex_m">
+                    <option value="1">Male</option>
+                    <option value="0">Female</option>
+                </select>
+            </div>
+
+            <!-- Resting BP -->
+            <div class="form-group">
+                <label>Resting Blood Pressure
+                    <span class="info" title="Blood Presure measured when the patient is relaxed and not doing physical activity. 140+ means High blood presure">ℹ️</span>
+                </label>
+                <input type="number" name="restingbp" required>
+            </div>
+
+            <!-- Cholesterol -->
+            <div class="form-group">
+                <label>Cholesterol (mg/dL) 
+        <span class="info" title="Serum cholesterol level (mg/dL). 240mg/dl and above -> High Cholesterol">ℹ️</span>
+                </label>
+                <input type="number" name="cholesterol" required>
+            </div>
+
+            <!-- Fasting Blood Sugar -->
+            <div class="form-group">
+                <label>Fasting Blood Sugar
+                    <span class="info" title="Blood sugar after 8 hours fasting.120mg/dl and above -> Diabetes">ℹ️</span>
+                </label>
+                <select name="fasting">
+                    <option value="1">High (>120 mg/dl)</option>
+                    <option value="0">Normal</option>
+                </select>
+            </div>
+
+            <!-- Max Heart Rate -->
+            <div class="form-group">
+                <label>Maximum Heart Rate
+                    <span class="info" title="Highest heart rate during exercise. Max HR = 220-Age">ℹ️</span>
+                </label>
+                <input type="number" name="maxhr" required>
+            </div>
+
+            <!-- Oldpeak -->
+            <div class="form-group">
+                <label>ST Depression (Oldpeak)
+                    <span class="info" title="Measurement of heart stress compared to rest. 0-1 -> Normal">ℹ️</span>
+                </label>
+                <input type="number" step="0.1" name="oldpeak" required>
+            </div>
+
+            <!-- Chest Pain Type -->
+            <div class="form-group">
+                <label>Chest Pain Type
+                    <span class="info" title="Flat ECG slope may indicate blockage.">ℹ️</span>
+                </label>
+                <select name="chestpain">
+                    <option value="ATA">ATA (Atypical Angina)</option>
+                    <option value="NAP">NAP (Non-Anginal Pain)</option>
+                    <option value="TA">TA (Typical Angina)</option>
+                    <option value="ASY">ASY (Asymptomatic)</option>
+                </select>
+            </div>
+
+            <!-- Resting ECG -->
+            <div class="form-group">
+                <label>Resting ECG
+                    <span class="info" title="ECG result while resting.Select the value based on medical report.">ℹ️</span>
+                </label>
+                <select name="restingecg">
+                    <option value="Normal">Normal</option>
+                    <option value="ST">ST-T Abnormality</option>
+                    <option value="LVH">Left Ventricular Hypertrophy</option>
+                </select>
+            </div>
+
+            <!-- Exercise Angina -->
+            <div class="form-group">
+                <label>Exercise Induced Angina
+                    <span class="info" title="Chest pain due to reduced blood flow to the heart.">ℹ️</span>
+
+                </label>
+                <select name="exercise">
+                    <option value="1">Yes</option>
+                    <option value="0">No</option>
+                </select>
+            </div>
+
+            <!-- ST Slope -->
+            <div class="form-group">
+                <label>ST Slope
+                    <span class="info" title="Upward ECG slope is generally healthier.">ℹ️</span>
+
+                </label>
+                <select name="stslope">
+                    <option value="Up">Up (Healthy)</option>
+                    <option value="Flat">Flat (Risk)</option>
+                </select>
+            </div>
+
+        </div>
+
+        <button type="submit">Analyze Heart Risk</button>
+
+    </form>
+
+{% if prediction_text %}
+<div class="result" id="resultBox" data-risk="{{ risk_percent }}">
+
+    <div class="risk-circle">
+        <div class="inner-circle">
+            {{ risk_percent }}%
+        </div>
+    </div>
+
+    <h2>{{ prediction_text }}</h2>
+
+    <div style="margin-top:20px;">
+        <a href="/download_advanced">
+            <button class="download-btn">📄 Download Report</button>
+        </a>
+    </div>
+
+</div>
+{% endif %}
+
+    <p class="disclaimer">
+        ⚠️ This tool provides AI-based estimation only.
+            It is NOT a medical diagnosis.
+    </p>
+
+    <footer class="footer">
+        Designed & Developed by Team CardioPredict
+    </footer>
+
+</div>
+
+<!-- RESULT COLOR SCRIPT -->
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    const resultBox = document.getElementById("resultBox");
+
+    if (resultBox) {
+        let risk = parseFloat(resultBox.dataset.risk);
+
+        if (risk >= 75) {
+            resultBox.classList.add("high-risk");
+        }
+        else if (risk >= 49 && risk < 75) {
+            resultBox.classList.add("medium-dark");
+        }
+        else if (risk >= 30 && risk < 49) {
+            resultBox.classList.add("medium-light");
+        }
+        else {
+            resultBox.classList.add("low-risk");
+        }
+    }
+});
+</script>
+
+</body>
+</html>

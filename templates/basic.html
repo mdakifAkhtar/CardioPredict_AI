@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>HeartCare AI</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+<div class="card">
+
+    <h1>🫀 Basic CardioPredict AI </h1>
+    <p class="subtitle">AI Powered Heart Disease Risk Assessment</p>
+
+    <form action="/predict_basic" method="POST">
+
+        <div class="grid">
+
+            <div class="form-group">
+                <label>Age</label>
+                <input type="number" name="age" required>
+            </div>
+
+        <div class="form-group">
+                <label>Gender</label>
+                <select name="sex_m">
+                    <option value="1">Male</option>
+                    <option value="0">Female</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+        <label>
+        Cholesterol
+        <span class="info" title="Serum cholesterol level (mg/dL).">ℹ️</span>
+        </label>
+        <input type="number" name="cholesterol" required>
+        </div>
+
+
+            <div class="form-group">
+                <label>
+                    Chest Discomfort (Angina Type)
+                    <span class="info" title="Chest pain due to reduced blood flow to the heart.">ℹ️</span>
+                </label>
+                <select name="cp_ata">
+                    <option value="1">Yes</option>
+                    <option value="0">No</option>
+                </select>
+            </div>
+
+            
+
+            <div class="form-group">
+                <label>
+                    Chest Pain During Exercise
+                    <span class="info" title="Chest pain that occurs during physical activity.">ℹ️</span>
+                </label>
+                <select name="exercise">
+                    <option value="1">Yes</option>
+                    <option value="0">No</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>
+                    Heart Stress Pattern (Upward)
+                    <span class="info" title="Upward ECG slope is generally healthier.">ℹ️</span>
+                </label>
+                <select name="st_up">
+                    <option value="1">Yes</option>
+                    <option value="0">No</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>
+                    Heart Stress Pattern (Flat)
+                    <span class="info" title="Flat ECG slope may indicate blockage.">ℹ️</span>
+                </label>
+                <select name="st_flat">
+                    <option value="1">Yes</option>
+                    <option value="0">No</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>
+                    Fasting Blood Sugar
+                    <span class="info" title="Blood sugar after 8 hours fasting.">ℹ️</span>
+                </label>
+                <select name="fasting">
+                    <option value="1">High</option>
+                    <option value="0">Normal</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>
+                    Maximum Heart Rate
+                    <span class="info" title="Highest heart rate during exercise.">ℹ️</span>
+                </label>
+                <input type="number" name="maxhr" required>
+            </div>
+
+            <div class="form-group">
+                <label>
+                    ST Depression (Oldpeak)
+                    <span class="info" title="Measurement of heart stress compared to rest.">ℹ️</span>
+                </label>
+                <input type="number" step="0.1" name="oldpeak" required>
+            </div>
+
+        </div>
+
+        <button type="submit">Analyze Risk</button>
+
+    </form>
+
+    <!-- AI LOADER (MUST BE INSIDE CARD) -->
+    <div class="loader" id="loader" style="display:none;">
+        <div class="scan-line"></div>
+        <p>🧠 AI Analyzing Heart Data...</p>
+    </div>
+
+{% if prediction_text %}
+<div class="result" id="resultBox" data-risk="{{ risk_percent }}">
+
+    <div class="risk-circle">
+        <div class="inner-circle">
+            {{ risk_percent }}%
+        </div>
+    </div>
+
+    <h2>{{ prediction_text }}</h2>
+
+    <div class="ecg-line"></div>
+
+    <!-- 🔥 DOWNLOAD BUTTON -->
+    <div style="margin-top:20px;">
+        <a href="/download_basic">
+            <button class="download-btn">📄 Download Report</button>
+        </a>
+    </div>
+
+</div>
+{% endif %}
+
+    <p class="disclaimer">
+        ⚠️ This tool provides risk estimation only and is not a medical diagnosis.
+        Please consult a licensed healthcare professional.
+    </p>
+
+    <footer class="footer">
+    Designed & Developed by Team CardioPredict
+    </footer>
+
+</div>
+
+<!-- SCRIPT -->
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    const resultBox = document.getElementById("resultBox");
+
+    if (resultBox) {
+        let risk = parseFloat(resultBox.dataset.risk);
+
+        if (risk >= 75) {
+            resultBox.classList.add("high-risk");
+        } 
+        else if (risk >= 46 && risk < 75) {
+            resultBox.classList.add("medium-dark");
+        }
+        else if (risk >= 30 && risk < 46) {
+            resultBox.classList.add("medium-light");
+        }
+        else {
+            resultBox.classList.add("low-risk");
+        }
+    }
+});
+</script>
+
+</body>
+</html>

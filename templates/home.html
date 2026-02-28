@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="icon" type="image/png" style="height:32px ;width:32px ;" href="🫀">
+    <title>🫀 HeartCare AI</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        body {
+            height: 100vh;
+            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .glass-container {
+            width: 90%;
+            max-width: 1100px;
+            padding: 60px;
+            border-radius: 30px;
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            box-shadow: 0 0 40px rgba(0, 255, 255, 0.15);
+            color: white;
+        }
+
+        h1 {
+            font-size: 2.8rem;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #d0d0d0;
+            margin-bottom: 50px;
+        }
+
+        .cards {
+            display: flex;
+            gap: 40px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .card {
+            flex: 1;
+            min-width: 280px;
+            padding: 40px;
+            border-radius: 25px;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            transition: 0.3s ease;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 0 25px rgba(0, 255, 255, 0.3);
+        }
+
+        .card h2 {
+            margin-bottom: 15px;
+            font-size: 1.6rem;
+        }
+
+        .card p {
+            color: #cfcfcf;
+            margin-bottom: 25px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            border-radius: 40px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+
+        .basic-btn {
+            background: linear-gradient(90deg, #00c6ff, #0072ff);
+            color: white;
+        }
+
+        .advanced-btn {
+            background: linear-gradient(90deg, #ff512f, #dd2476);
+            color: white;
+        }
+
+        .btn:hover {
+            opacity: 0.85;
+            transform: scale(1.05);
+        }
+
+        .footer {
+            margin-top: 60px;
+            text-align: center;
+            font-size: 0.9rem;
+            color: #aaa;
+        }
+
+        .footer button {
+            margin-top: 15px;
+            padding: 10px 25px;
+            border-radius: 30px;
+            border: none;
+            background: linear-gradient(90deg, #00f2fe, #4facfe);
+            color: white;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .footer button:hover {
+            transform: scale(1.05);
+        }
+
+        @media(max-width: 768px) {
+            .cards {
+                flex-direction: column;
+            }
+        }
+
+    </style>
+</head>
+
+<body>
+
+<div class="glass-container">
+
+    <h1>🫀 HeartCare AI</h1>
+    <p class="subtitle">AI Powered Heart Disease Risk Assessment</p>
+
+    <div class="cards">
+
+        <div class="card">
+            <h2>🩺 Basic Check</h2>
+            <p>Quick AI-based heart risk evaluation using essential health metrics.</p>
+            <a href="{{ url_for('basic') }}" class="btn basic-btn">
+                Start Basic Analysis
+            </a>
+        </div>
+
+        <div class="card">
+            <h2>🧠 Advanced AI Check</h2>
+            <p>Deep analysis with ECG & stress indicators.</p>
+            <a href="{{ url_for('advanced') }}" class="btn advanced-btn">
+                Start Advanced Analysis
+            </a>
+        </div>
+
+    </div>
+
+    <div class="footer">
+        ⚠️ This system provides AI-based estimation only and is not a medical diagnosis.
+        <br>
+        <br>
+        © 2026 HeartCare AI | Designed & Developed by Team CardioPredict
+    </div>
+
+</div>
+
+</body>
+</html>
